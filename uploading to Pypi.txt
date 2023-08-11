@@ -1,0 +1,10 @@
+https://packaging.python.org/en/latest/tutorials/packaging-projects/
+
+From labcomm folder
+py -m build
+
+to try the test version - requires an account and token from testpypi
+py -m twine upload --repository testpypi dist/*
+
+
+py -m twine upload dist/*
