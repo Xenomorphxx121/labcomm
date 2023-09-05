@@ -6,8 +6,7 @@ class labcomm_packet():
         │ PREAMBLE │ VERSION │ DESTINATION ID │    SOURCE ID   │ PAYLOAD SIZE │   PAYLOAD   │ ENDAMBLE │
         └──────────┴─────────┴────────────────┴────────────────┴──────────────┴─────────────┴──────────┘
         │◄───10B──►│◄──1B───►│◄──────2B──────►│◄──────2B──────►│◄─────4B─────►│◄─SIZE(P/L)─►│◄───4B───►│
-
-        See the document: "Labcomm Manual.docx"'''
+        '''
         self.PREAMBLE           = "L@BC0MmADI"
         self.ENDAMBLE           = "TeoM"
         self.VERSION            = "1"
