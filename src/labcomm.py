@@ -13,6 +13,7 @@ class labcomm_packet():
         self.ENDAMBLE_LEN       = len(self.ENDAMBLE)
         self.ENDPOINT_LEN       = 2
         self.PAYLOAD_SIZE_LEN   = 4
+        self.META_SIZE          = len(self.PREAMBLE) + len(self.VERSION) + 2*self.ENDPOINT_LEN + self.PAYLOAD_SIZE_LEN
                 
     def assemble(self, source, destination, payload):        
         return  bytes(self.PREAMBLE, "latin-1")                                             + \
@@ -74,7 +75,7 @@ class labcomm_parser(labcomm_packet):
         if len(self.payload_size_buffer) < self.PAYLOAD_SIZE_LEN:
             self.payload_size_buffer += byte
         if len(self.payload_size_buffer) == self.PAYLOAD_SIZE_LEN:
-            self.payload_size = self._compute_payload_size(self.payload_size_buffer[0:4])
+            self._compute_payload_size(self.payload_size_buffer[0:4])
             self.state = "get_payload"
 
     def get_payload(self, byte):
@@ -109,17 +110,15 @@ class labcomm_parser(labcomm_packet):
         
     def _compute_payload_size(self, string):
         try:
-            payload_size = ord(string[0])*256**3 + ord(string[1])*256**2 + ord(string[2])*256 + ord(string[3])
+            self.payload_size = ord(string[0])*256**3 + ord(string[1])*256**2 + ord(string[2])*256 + ord(string[3])
         except:
             print(f'\n\nLabcomm debug breakpoint in _compute_payload_size()...\nPayload_size came back as "{string}".\n\n')
-            payload_size = 0
-        return payload_size
+            self.payload_size = 0
 
     def read_message(self):
-        meta_size = len(self.PREAMBLE) + len(self.VERSION) + 2*self.ENDPOINT_LEN + self.PAYLOAD_SIZE_LEN
-        meta_data = self.interface.read(meta_size)
-        payload_size = self._compute_payload_size(meta_data[meta_size-self.PAYLOAD_SIZE_LEN:meta_size])
-        payload = self.interface.read(size=payload_size)
+        meta_data = self.interface.read(self.META_SIZE)
+        self._compute_payload_size(meta_data[self.META_SIZE-self.PAYLOAD_SIZE_LEN:self.META_SIZE])
+        payload = self.interface.read(size=self.payload_size)
         endamble = self.interface.read(size=self.ENDAMBLE_LEN)
         if endamble != self.ENDAMBLE:
             self.interface.reset_input_buffer()
