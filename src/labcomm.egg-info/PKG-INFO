@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: labcomm
-Version: 0.0.2
+Version: 0.0.3
 Summary: A fast binary protocol for interacting with integrated circuit demonstration boards.
 Author-email: Steve Martin <Steve.Martin@analog.com>
 Project-URL: Homepage, https://github.com/Xenomorphxx121/labcomm
