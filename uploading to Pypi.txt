@@ -13,7 +13,7 @@ From a local labcomm clone...
 4)  Build the project with:
     > python -m build
 
-5)  Commit the new build to Github
+5)  Commit and push the new build to Github
 
 6)  To optionally try the test version - requires an account and token from testpypi:
     > python -m twine upload --repository testpypi dist/*
