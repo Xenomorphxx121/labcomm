@@ -20,3 +20,9 @@ From a local labcomm clone...
     
 7)  Finally upload the new build to Pypi:
     > python -m twine upload dist/*
+    
+8)  Get a new token from Pypi by:
+    * Log in to Pypi with two factir authentication.
+    * Go to Account Settings under your user ID at the top right
+    * Scroll down to API Tokens and create a new token
+    * Enter the token at the prompt generate by the twine upload command.
