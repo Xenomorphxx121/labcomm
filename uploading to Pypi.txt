@@ -1,10 +1,22 @@
 https://packaging.python.org/en/latest/tutorials/packaging-projects/
+https://twine.readthedocs.io/en/stable/
 
-From labcomm folder
-py -m build
+From a local labcomm clone...
 
-to try the test version - requires an account and token from testpypi
-py -m twine upload --repository testpypi dist/*
+1)  Ensure build and twine are installed in your main Python environment or a given environment:
+    > python -m pip install build twine
 
+2)  Increment the version number in pyproject.toml
 
-py -m twine upload dist/*
+3)  Git delete the previous contents of the /dist folder.
+
+4)  Build the project with:
+    > python -m build
+
+5)  Commit the new build to Github
+
+6)  To optionally try the test version - requires an account and token from testpypi:
+    > python -m twine upload --repository testpypi dist/*
+    
+7)  Finally upload the new build to Pypi:
+    > python -m twine upload dist/*
